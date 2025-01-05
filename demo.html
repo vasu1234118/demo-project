@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video and Form Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 80px 50px 50px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .video-container {
+            width: 75%;
+            height: 400px;
+            padding: 5px 5px 0px 5px; 
+        }
+
+        .form-container {
+            width: 25%;
+            padding: 0px 20px 0px 20px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 7px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 768px) {
+    body {
+        display: flex;
+        justify-content: center;
+        padding: 0 20px; 
+        margin: 0;
+        min-height: auto; 
+        flex-direction: column;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 768px; 
+        padding: 0 15px; 
+    }
+
+    .video-container {
+        width: 100%;
+        height: auto;
+        margin-bottom: 25px;
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 0 15px; 
+        margin-bottom: 10px;
+    }
+}
+
+/* For very small mobile screens (480px and below) */
+@media (max-width: 480px) {
+    body {
+        padding: 0 10px; 
+        flex-direction: column;
+    }
+
+    .form-container input, .form-container button {
+        padding: 8px;
+        font-size: 14px; 
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        
+        <video id="myVideo" controls disabled>
+            <source src="GSMTVideo.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="form-container">
+
+        <form id="myForm" action="video.php" method="POST">
+          <h4>Fill in the Form to Watch Our Demo</h4>
+            <label for="firstName">First Name</label> 
+            <input type="text" id="firstName" name="first_name" required>
+        
+            <label for="businessEmail">Business Email ID</label>
+            <input type="email" id="businessEmail" name="business_email" required>
+        
+            <label for="organizationName">Organization Name</label>
+            <input type="text" id="organizationName" name="organization_name" required>
+        
+            <label for="designation">Designation</label>
+            <input type="text" id="designation" name="designation" required>
+        
+            <label for="contactNumber">Contact Number</label>
+            <input type="tel" id="contactNumber" name="contact_number" required>
+        
+            <button type="submit">View Demo</button>
+        </form>
+        
+    </div>
+    
+    <script>
+        const form = document.getElementById('myForm');
+        const video = document.getElementById('myVideo');
+
+        // Initially disable video controls
+        video.controls = false;
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const email = document.getElementById('businessEmail').value;
+
+            // Simple validation for business email (no Gmail, Yahoo, AOL)
+            const forbiddenDomains = ['gmail.com', 'yahoo.com', 'aol.com'];
+            const emailDomain = email.split('@')[1];
+
+            if (forbiddenDomains.includes(emailDomain)) {
+                alert('Please provide a business email; Gmail, Yahoo, and AOL emails are not accepted.');
+                return;
+            }
+
+            // If valid, enable video controls and play the video
+            video.controls = true; 
+            video.play();
+            form.reset(); 
+        });
+    </script>
+
+</body>
+</html>
